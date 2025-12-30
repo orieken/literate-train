@@ -50,7 +50,7 @@ export const useUserStore = defineStore('user', {
     
     currentLevelProgress(): number {
       const xpInCurrentLevel = this.totalXp % 100;
-      return (xpInCurrentLevel / this.xpToNextLevel) * 100;
+      return xpInCurrentLevel;
     },
 
     unlockedAchievements(): Achievement[] {
