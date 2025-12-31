@@ -40,29 +40,29 @@ export const usePatternsStore = defineStore('patterns', {
   doSomething() {
     return "Singleton instance";
   }
-}
-
-export default Singleton;`,
+}`,
         solution: `class Singleton {
-  private static instance: Singleton;
+  static instance;
   
-  private constructor() {
-    // Private constructor prevents direct instantiation
+  constructor() {
+    // Prevent multiple instantiation
+    if (Singleton.instance) {
+      throw new Error('Use Singleton.getInstance() instead of new');
+    }
+    Singleton.instance = this;
   }
   
-  static getInstance(): Singleton {
+  static getInstance() {
     if (!Singleton.instance) {
       Singleton.instance = new Singleton();
     }
     return Singleton.instance;
   }
   
-  doSomething(): string {
+  doSomething() {
     return "Singleton instance";
   }
-}
-
-export default Singleton;`,
+}`,
         testCases: [
           {
             id: 'test-1',
@@ -106,15 +106,13 @@ Target: 7
 Step 1: [1, 3, 5, 7, | 9, 11, 13, 15]  mid=7 ✓
         `,
         xpReward: 40,
-        starterCode: `function binarySearch(arr: number[], target: number): number {
+        starterCode: `function binarySearch(arr, target) {
   // TODO: Implement binary search
   // Return the index of target, or -1 if not found
   
   return -1;
-}
-
-export default binarySearch;`,
-        solution: `function binarySearch(arr: number[], target: number): number {
+}`,
+        solution: `function binarySearch(arr, target) {
   let left = 0;
   let right = arr.length - 1;
   
@@ -131,9 +129,7 @@ export default binarySearch;`,
   }
   
   return -1;
-}
-
-export default binarySearch;`,
+}`,
         testCases: [
           {
             id: 'test-1',
@@ -184,26 +180,18 @@ export default binarySearch;`,
      └────────── x
         `,
         xpReward: 60,
-        starterCode: `interface Point {
-  x: number;
-  y: number;
-}
+        starterCode: `// Point: { x: number, y: number }
 
-function linearRegression(points: Point[]): { slope: number; intercept: number } {
+function linearRegression(points) {
   // TODO: Calculate slope and intercept
   // slope = Σ((x - meanX) * (y - meanY)) / Σ((x - meanX)²)
   // intercept = meanY - slope * meanX
   
   return { slope: 0, intercept: 0 };
-}
+}`,
+        solution: `// Point: { x: number, y: number }
 
-export default linearRegression;`,
-        solution: `interface Point {
-  x: number;
-  y: number;
-}
-
-function linearRegression(points: Point[]): { slope: number; intercept: number } {
+function linearRegression(points) {
   const n = points.length;
   const meanX = points.reduce((sum, p) => sum + p.x, 0) / n;
   const meanY = points.reduce((sum, p) => sum + p.y, 0) / n;
@@ -220,9 +208,7 @@ function linearRegression(points: Point[]): { slope: number; intercept: number }
   const intercept = meanY - slope * meanX;
   
   return { slope, intercept };
-}
-
-export default linearRegression;`,
+}`,
         testCases: [
           {
             id: 'test-1',
