@@ -45,9 +45,9 @@ export const usePatternsStore = defineStore('patterns', {
   static instance;
   
   constructor() {
-    // Private constructor prevents direct instantiation
+    // Prevent multiple instantiation
     if (Singleton.instance) {
-      return Singleton.instance;
+      throw new Error('Use Singleton.getInstance() instead of new');
     }
     Singleton.instance = this;
   }
