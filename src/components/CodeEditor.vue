@@ -18,7 +18,8 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue';
 import { EditorView, basicSetup } from 'codemirror';
-import { javascript } from '@codemirror/lang-javascript';
+import { typescriptLanguage } from '@codemirror/lang-javascript';
+import { LanguageSupport } from '@codemirror/language';
 import { oneDark } from '@codemirror/theme-one-dark';
 
 const props = defineProps<{
@@ -44,7 +45,7 @@ onMounted(() => {
     doc: props.modelValue,
     extensions: [
       basicSetup,
-      javascript({ typescript: true }),
+      new LanguageSupport(typescriptLanguage),
       oneDark,
       EditorView.updateListener.of((update) => {
         if (update.docChanged) {
